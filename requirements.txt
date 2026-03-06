@@ -1,5 +1,4 @@
-flask
-torch
 transformers
+torch
 sentencepiece
-gunicorn
+gradio
