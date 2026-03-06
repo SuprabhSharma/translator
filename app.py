@@ -1,7 +1,5 @@
-from flask import Flask, render_template, request
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-
-app = Flask(__name__)
+import gradio as gr
 
 model_name = "facebook/nllb-200-distilled-600M"
 
@@ -10,7 +8,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
 tokenizer.src_lang = "eng_Latn"
 
-def translate_text(text):
+def translate(text):
 
     inputs = tokenizer(text, return_tensors="pt")
 
@@ -27,18 +25,11 @@ def translate_text(text):
     return translated_text
 
 
-@app.route("/", methods=["GET","POST"])
-def home():
+interface = gr.Interface(
+    fn=translate,
+    inputs=gr.Textbox(label="Enter English Text"),
+    outputs=gr.Textbox(label="Hindi Translation"),
+    title="English → Hindi Translator",
+)
 
-    translation = ""
-
-    if request.method == "POST":
-
-        text = request.form["text"]
-        translation = translate_text(text)
-
-    return render_template("index.html", translation=translation)
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+interface.launch()
