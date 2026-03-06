@@ -1,23 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>English to Hindi Translator</title>
+<meta charset="UTF-8">
+<title>English → Hindi Translator</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
 
-<h2>English to Hindi Translator</h2>
+<div class="container">
+
+<h1>🌐 English → Hindi Translator</h1>
+
+<p class="subtitle">AI Powered Translation</p>
 
 <form method="POST">
 
-<input type="text" name="text" placeholder="Enter English text" required>
+<input 
+type="text" 
+name="text" 
+placeholder="Enter English sentence..."
+required
+>
 
 <button type="submit">Translate</button>
 
 </form>
 
-<h3>{{translation}}</h3>
+{% if translation %}
+
+<div class="result">
+
+<h3>Hindi Translation</h3>
+
+<p>{{translation}}</p>
+
+</div>
+
+{% endif %}
+
+</div>
 
 </body>
-
 </html>
